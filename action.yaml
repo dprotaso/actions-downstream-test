@@ -40,19 +40,19 @@ runs:
       run: |
         set -x
         pushd ./src/${{ inputs.downstream-module }}
-        tags="$(grep -qI  -r '// +build' . |
-                grep -qv '^./vendor/' | \
-                grep -qv '^./hack/' | \
-                grep -qv '^./third_party' | \
-                grep -qv '^./.github' | \
+        tags="$(grep -q -I  -r '// +build' . |
+                grep -q -v '^./vendor/' | \
+                grep -q -v '^./hack/' | \
+                grep -q -v '^./third_party' | \
+                grep -q -v '^./.github' | \
                 cut -f3 -d' ' | \
                 tr ',' '\n' | \
                 sort | uniq | \
-                grep -qv '^!' | \
+                grep -q -v '^!' | \
                 `# Don't pass any of the built-in GOOS tags` \
-                grep -qvE '(windows|linux|darwin)' | \
+                grep -q -vE '(windows|linux|darwin)' | \
                 `# Skip the tools tag` \
-                grep -qv 'tools' | \
+                grep -q -v 'tools' | \
                 tr '\n' ' ')"
         echo "Building with tags: ${tags}"
         go test -vet=off -tags "${tags}" -exec echo ./...
