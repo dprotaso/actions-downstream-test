@@ -18,21 +18,22 @@ runs:
       run: |
         pushd ./src/${{ inputs.downstream-module }}
         go mod edit -replace ${{ inputs.upstream-module }}=$GITHUB_WORKSPACE/src/${{ inputs.upstream-module }}
+        go mod vendor
         popd
 
-    - name: Downstream Update Deps
-      shell: bash
-      run: |
-        pushd ./src/${{ inputs.downstream-module }}
-        ./hack/update-deps.sh
-        popd
+    # - name: Downstream Update Deps
+    #   shell: bash
+    #   run: |
+    #     pushd ./src/${{ inputs.downstream-module }}
+    #     ./hack/update-deps.sh
+    #     popd
 
-    - name:  Downstream Update Codegen
-      shell: bash
-      run: |
-        pushd ./src/${{ inputs.downstream-module }}
-        ./hack/update-codegen.sh
-        popd
+    # - name:  Downstream Update Codegen
+    #   shell: bash
+    #   run: |
+    #     pushd ./src/${{ inputs.downstream-module }}
+    #     ./hack/update-codegen.sh
+    #     popd
 
     - name: Build
       shell: bash
@@ -56,9 +57,9 @@ runs:
         go test -vet=off -tags "${tags}" -exec echo ./...
         popd
 
-    - name: Test Downstream
-      shell: bash
-      run: |
-        pushd ./src/${{ inputs.downstream-module }}
-        go test -race ./...
-        popd
+    # - name: Test Downstream
+    #   shell: bash
+    #   run: |
+    #     pushd ./src/${{ inputs.downstream-module }}
+    #     go test -race ./...
+    #     popd
