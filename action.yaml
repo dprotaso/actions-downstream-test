@@ -50,7 +50,7 @@ runs:
                 sort | uniq | \
                 grep -q -v '^!' | \
                 `# Don't pass any of the built-in GOOS tags` \
-                grep -q -vE '(windows|linux|darwin)' | \
+                grep -q -v -E '(windows|linux|darwin)' | \
                 `# Skip the tools tag` \
                 grep -q -v 'tools' | \
                 tr '\n' ' ')"
