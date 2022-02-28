@@ -38,6 +38,7 @@ runs:
     - name: Build
       shell: bash
       run: |
+        set -x
         pushd ./src/${{ inputs.downstream-module }}
         tags="$(grep -I  -r '// +build' . |
                 grep -v '^./vendor/' | \
